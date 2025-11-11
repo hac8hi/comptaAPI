@@ -9,8 +9,6 @@ class Company_Settings_Serializer(serializers.ModelSerializer):
 
 class Company_Serializer(serializers.ModelSerializer):
 
-    settings = Company_Settings_Serializer(many=True, read_only=True)
-
     class Meta:
         model = Company
         fields = '__all__'

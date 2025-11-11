@@ -6,7 +6,7 @@ from chart_of_accounts.models import Accounts
 # Create your models here.
 class Invoices(models.Model):
     
-    company_id = models.ForeignKey(Company, on_delete=models.CASCADE, unique=True)
+    company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
     contact_id = models.ForeignKey(Contacts, on_delete=models.CASCADE)
     invoice_number = models.CharField(max_length=50, unique=True)
     invoice_date = models.DateField()
