@@ -21,7 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('chart_of_accounts/', include('chart_of_accounts.urls')),
     path('company_organization/', include('company_organization.urls')),
-    #path('contacts/', include('contacts.urls')),
+    path('contacts/', include('contacts.urls')),
     #path('invoicing', include('invoicing.urls')),
     #path('journal_transactions', include('journal_transactions.urls'))
 ]

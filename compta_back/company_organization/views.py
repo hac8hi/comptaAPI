@@ -81,7 +81,9 @@ class Company_Settings_Detail(APIView):
     def put(self, request, fk, pk):
 
         instance = self.get_object(fk, pk)
-        serializer = Company_Settings_Serializer(instance, data=request.data)
+        data = request.data
+        data['company_id'] = fk
+        serializer = Company_Settings_Serializer(instance, data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)

@@ -41,7 +41,9 @@ class Account_Detail(APIView):
     def put(self, request, fk, pk):
 
         instance = self.get_object(fk, pk)
-        serializer = Accounts_Serializer(instance, data=request.data)
+        data = request.data
+        data['company_id'] = fk
+        serializer = Accounts_Serializer(instance, data=request)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
