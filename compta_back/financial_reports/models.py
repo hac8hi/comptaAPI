@@ -1,9 +1,11 @@
 from django.db import models
 from company_organization.models import Company
+import uuid
 
 # Create your models here.
 class Financial_report(models.Model):
 
+    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     REPORTS = [
         ('bilan', 'Bilan'),

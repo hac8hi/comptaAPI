@@ -7,13 +7,13 @@ from company_organization.serializers import Company_Serializer, Company_Setting
 
 class Company_List(APIView):
 
-    def get(self, request, format=None):
+    def get(self, request):
 
         companies = Company.objects.all()
         serializer = Company_Serializer(companies, many=True)
         return Response(serializer.data)
 
-    def post(self, request, format=None):
+    def post(self, request):
 
         serializer = Company_Serializer(data=request.data)
         if serializer.is_valid():
@@ -30,7 +30,7 @@ class Company_Detail(APIView):
         except Company.DoesNotExist:
             return Response({"Cette société n'existe pas"}, status=status.HTTP_404_NOT_FOUND)
     
-    def get(self, pk):
+    def get(self, request, pk):
 
         company = self.get_object(pk)
         serializer = Company_Serializer(company)
@@ -45,7 +45,7 @@ class Company_Detail(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def delete(self, pk):
+    def delete(self, request, pk):
 
         company = self.get_object(pk)
         company.delete()
@@ -53,17 +53,18 @@ class Company_Detail(APIView):
 
 class Company_Settings_List(APIView):
 
-    def get(self, fk):
+    def get(self, request, fk):
 
-        settings = Company_Settings.objects.get(company_id=fk)
+        settings = Company_Settings.objects.filter(company_id=fk)
         serializer = Company_Settings_Serializer(settings, many=True)
         return Response(serializer.data)
 
     def post(self, request, fk):
 
         data = request.data
-        data['company_id'] = fk
-        serializer = Company_Settings_Serializer(data=request.data, many=True)
+        for item in data:
+            item['company_id'] = fk
+        serializer = Company_Settings_Serializer(data=data, many=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -89,7 +90,7 @@ class Company_Settings_Detail(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, fk, pk):
+    def delete(self, request, fk, pk):
 
         setting = self.get_object(fk, pk)
         setting.delete()

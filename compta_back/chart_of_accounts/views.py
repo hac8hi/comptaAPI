@@ -7,7 +7,7 @@ from .serializers import Accounts_Serializer, Account_Types_Serializer
 
 class Account_List(APIView):
 
-    def get(self, fk):
+    def get(self, request, fk):
 
         accounts = Accounts.objects.get(company_id=fk)
         serializer = Accounts_Serializer(accounts, many=True)
@@ -32,7 +32,7 @@ class Account_Detail(APIView):
         except Accounts.DoesNotExist:
             return Response({"Ce compte n'existe pas"}, status=status.HTTP_404_NOT_FOUND)
     
-    def get(self, fk, pk):
+    def get(self, request, fk, pk):
 
         account = self.get_object(pk, fk)
         serializer = Accounts_Serializer(account)
@@ -49,7 +49,7 @@ class Account_Detail(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def delete(self, fk, pk):
+    def delete(self, request, fk, pk):
 
         account = self.get_object(fk, pk)
         account.delete()
@@ -57,7 +57,7 @@ class Account_Detail(APIView):
 
 class Account_Types_List(APIView):
 
-    def get(self):
+    def get(self, request):
 
         account_types = Account_Types.objects.all()
         serializer = Account_Types_Serializer(data=account_types, many=True)
@@ -69,9 +69,12 @@ class Account_Types_Detail(APIView):
 
     def get_object(self, pk):
 
-        return Account_Types.objects.get(pk=pk)
+        try:
+            return Account_Types.objects.get(pk=pk)
+        except Account_Types.DoesNotExist:
+            return Response({"Ce type de compte n'existe pas"}, status=status.HTTP_404_NOT_FOUND)
 
-    def get(self, fk, pk):
+    def get(self, request, fk, pk):
 
         account = Account_Detail.get_object(fk, pk)
         account_type = self.get_object(account.account_type_id)

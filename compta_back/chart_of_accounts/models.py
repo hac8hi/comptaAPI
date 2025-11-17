@@ -1,9 +1,11 @@
 from django.db import models
 from company_organization.models import Company
+import uuid
 
 # Create your models here.
 class Account_Types(models.Model):
 
+    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
     TYPES = [
         ('Actif', 'Actif'),
         ('Passif', 'Passif'),
@@ -26,6 +28,7 @@ class Account_Types(models.Model):
 
 class Accounts(models.Model):
 
+    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
     account_number = models.CharField(max_length=20, unique=True)
     account_name = models.CharField(max_length=255)

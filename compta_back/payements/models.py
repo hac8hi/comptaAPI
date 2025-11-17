@@ -3,10 +3,12 @@ from company_organization.models import Company
 from contacts.models import Contacts
 from chart_of_accounts.models import Accounts
 from invoicing.models import Invoices
+import uuid
 
 # Create your models here.
 class Payement_Methods(models.Model):
 
+    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
     METHODS = [
         ('espèce', 'espèce'),
         ('chèque', 'Chèque'),
@@ -20,6 +22,7 @@ class Payement_Methods(models.Model):
 
 class Payements(models.Model):
 
+    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
     contact_id = models.ForeignKey(Contacts, on_delete=models.CASCADE)
     payement_date = models.DateField()
@@ -35,6 +38,7 @@ class Payements(models.Model):
 
 class Payment_Allocations(models.Model):
 
+    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
     payement_id = models.ForeignKey(Payements, on_delete=models.CASCADE)
     invoice_id = models.ForeignKey(Invoices, on_delete=models.CASCADE)
     allocated_amount = models.DecimalField(max_digits=15, decimal_places=2)

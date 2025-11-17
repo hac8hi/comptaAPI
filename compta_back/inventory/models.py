@@ -3,10 +3,12 @@ from company_organization.models import Company
 from chart_of_accounts.models import Accounts
 from invoicing.models import Invoices
 from journal_transactions.models import Journal_Entries
+import uuid
 
 # Create your models here.
 class Products(models.Model):
 
+    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
     product_code = models.CharField(max_length=50)
     product_name = models.CharField(max_length=100)
@@ -21,6 +23,7 @@ class Products(models.Model):
 
 class Inventory_Transactions(models.Model):
 
+    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
     product_id = models.ForeignKey(Products, on_delete=models.CASCADE)
     TRANSACTIONS = [
         ('achat', 'Achat'),
@@ -31,7 +34,7 @@ class Inventory_Transactions(models.Model):
     transaction_type = models.CharField(max_length=15, choices=TRANSACTIONS)
     quantity = models.DecimalField(max_digits=10, decimal_places=2)
     unit_cost = models.DecimalField(max_digits=15, decimal_places=2)
-    transaction_date = models.DateTime()
+    transaction_date = models.DateField()
     invoice_id  = models.ForeignKey(Invoices, on_delete=models.CASCADE, null=True, blank=True)
     journal_entry_id = models.ForeignKey(Journal_Entries, on_delete=models.CASCADE, null=True, blank=True)
     REFERENCES = [

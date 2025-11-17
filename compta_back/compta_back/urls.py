@@ -23,5 +23,5 @@ urlpatterns = [
     path('company_organization/', include('company_organization.urls')),
     path('contacts/', include('contacts.urls')),
     #path('invoicing', include('invoicing.urls')),
-    #path('journal_transactions', include('journal_transactions.urls'))
+    path('journal_transactions', include('journal_transactions.urls'))
 ]
