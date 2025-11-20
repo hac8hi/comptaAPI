@@ -5,7 +5,7 @@ import uuid
 # Create your models here.
 class Financial_report(models.Model):
 
-    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
     REPORTS = [
         ('bilan', 'Bilan'),

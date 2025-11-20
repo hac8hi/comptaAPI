@@ -8,7 +8,7 @@ import uuid
 # Create your models here.
 class Payement_Methods(models.Model):
 
-    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     METHODS = [
         ('espèce', 'espèce'),
         ('chèque', 'Chèque'),
@@ -22,7 +22,7 @@ class Payement_Methods(models.Model):
 
 class Payements(models.Model):
 
-    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
     contact_id = models.ForeignKey(Contacts, on_delete=models.CASCADE)
     payement_date = models.DateField()

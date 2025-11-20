@@ -9,6 +9,8 @@ class Contact_Types_Serializer(serializers.ModelSerializer):
 
 class Contacts_Serializer(serializers.ModelSerializer):
 
+    type = Contact_Types_Serializer(many=True, read_only=True)
+
     class Meta:
         model = Contacts
         fields = '__all__'

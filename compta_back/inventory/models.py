@@ -8,7 +8,7 @@ import uuid
 # Create your models here.
 class Products(models.Model):
 
-    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
     product_code = models.CharField(max_length=50)
     product_name = models.CharField(max_length=100)
@@ -23,7 +23,7 @@ class Products(models.Model):
 
 class Inventory_Transactions(models.Model):
 
-    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     product_id = models.ForeignKey(Products, on_delete=models.CASCADE)
     TRANSACTIONS = [
         ('achat', 'Achat'),

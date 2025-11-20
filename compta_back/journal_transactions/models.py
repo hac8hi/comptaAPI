@@ -7,7 +7,7 @@ import uuid
 # Create your models here.
 class Journals(models.Model):
 
-    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     journal_name = models.CharField(max_length=100)
     journal_code = models.CharField(max_length=10)
 
@@ -16,7 +16,7 @@ class Journals(models.Model):
 
 class Journal_Entries(models.Model):
 
-    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
     journal_id = models.ForeignKey(Journals, on_delete=models.CASCADE)
     entry_number = models.CharField(max_length=50)
@@ -40,9 +40,9 @@ class Journal_Entries(models.Model):
 
 class Journal_Entry_Items(models.Model):
 
-    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
-    entry_id = models.ForeignKey(Journal_Entries, on_delete=models.CASCADE)
-    account_id = models.ForeignKey(Accounts, on_delete=models.CASCADE)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    entry_id = models.ForeignKey(Journal_Entries, on_delete=models.CASCADE, related_name='items')
+    account_id = models.ForeignKey(Accounts, on_delete=models.CASCADE, related_name='account')
     contact_id = models.ForeignKey(Contacts, on_delete=models.CASCADE, blank=True, null=True)
     debit_amount = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     credit_amount = models.DecimalField(max_digits=15, decimal_places=2, default=0)

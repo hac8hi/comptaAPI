@@ -5,14 +5,23 @@ import uuid
 # Create your models here.
 class Contact_Types(models.Model):
 
-    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
-    type_name = models.CharField(max_length=50)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    TYPES = [
+        ('Client', 'client'),
+        ('Fournisseur', 'fournisseur'),
+        ('Employé', 'employé'),
+        ('Actionnaire', 'actionnaire'),
+        ('Banque', 'banque'),
+        ('Administration', 'administration'),
+        ('Autre', 'autre'),
+    ]
+    type_name = models.CharField(max_length=50, choices=TYPES)
 
 class Contacts(models.Model):
 
-    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
-    contact_types_id = models.ForeignKey(Contact_Types, on_delete=models.CASCADE)
+    contact_types_id = models.ForeignKey(Contact_Types, on_delete=models.CASCADE, related_name='type')
     contact_name = models.CharField(max_length=255)
     email = models.EmailField(blank=True)
     phone = models.CharField(max_length=20, blank=True, null=True)

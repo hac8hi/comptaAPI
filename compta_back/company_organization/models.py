@@ -4,7 +4,7 @@ import uuid
 # Create your models here.
 class Company(models.Model):
 
-    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     company_name = models.CharField(max_length=255)
     tax_id = models.CharField(max_length=50, blank=True, null=True)
     address = models.TextField(blank=True, null=True)
@@ -19,8 +19,8 @@ class Company(models.Model):
 
 class Company_Settings(models.Model):
 
-    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
-    company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    company_id = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='settings')
     setting_key = models.CharField(max_length=100, blank=True)
     setting_value = models.TextField(blank=True, null=True)
 

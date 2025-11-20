@@ -5,7 +5,7 @@ import uuid
 # Create your models here.
 class Account_Types(models.Model):
 
-    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     TYPES = [
         ('Actif', 'Actif'),
         ('Passif', 'Passif'),
@@ -28,11 +28,11 @@ class Account_Types(models.Model):
 
 class Accounts(models.Model):
 
-    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
     account_number = models.CharField(max_length=20, unique=True)
     account_name = models.CharField(max_length=255)
-    account_type_id = models.ForeignKey(Account_Types, on_delete=models.CASCADE)
+    account_type_id = models.ForeignKey(Account_Types, on_delete=models.CASCADE, related_name='type')
     parent_account_id = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     description = models.TextField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
