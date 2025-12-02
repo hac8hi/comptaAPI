@@ -23,13 +23,13 @@ class Payement_Methods(models.Model):
 class Payements(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
-    contact_id = models.ForeignKey(Contacts, on_delete=models.CASCADE)
+    company_id = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='company_for_payement')
+    contact_id = models.ForeignKey(Contacts, on_delete=models.CASCADE, related_name='contact_for_payement')
     payement_date = models.DateField()
-    payement_method_id = models.ForeignKey(Payement_Methods, on_delete=models.CASCADE)
+    payement_method_id = models.ForeignKey(Payement_Methods, on_delete=models.CASCADE, related_name='method')
     reference_number = models.CharField(max_length=100, blank=True)
     amount = models.DecimalField(max_digits=15, decimal_places=2)
-    account_id = models.ForeignKey(Accounts, on_delete=models.CASCADE)
+    account_id = models.ForeignKey(Accounts, on_delete=models.CASCADE, related_name='account_for_payement')
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 

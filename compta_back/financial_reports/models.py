@@ -3,10 +3,10 @@ from company_organization.models import Company
 import uuid
 
 # Create your models here.
-class Financial_report(models.Model):
+class Financial_Report(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='name_of_company')
     REPORTS = [
         ('bilan', 'Bilan'),
         ('compte_de_resultat', 'Compte de résultat'),

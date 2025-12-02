@@ -8,7 +8,7 @@ import uuid
 class Invoices(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    company_id = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='company')
+    company_id = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='company_contact')
     contact_id = models.ForeignKey(Contacts, on_delete=models.CASCADE, related_name='contact')
     invoice_number = models.CharField(max_length=50, unique=True)
     invoice_date = models.DateField()
@@ -44,7 +44,7 @@ class Invoices(models.Model):
 class Invoices_Lines(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    invoice_id = models.ForeignKey(Invoices, on_delete=models.CASCADE, related_name='invoices_lines')
+    invoice_id = models.ForeignKey(Invoices, on_delete=models.CASCADE, related_name='invoice_lines')
     account_id = models.ForeignKey(Accounts, on_delete=models.CASCADE)
     item_description = models.TextField()
     quantity = models.DecimalField(max_digits=15, decimal_places=2)
