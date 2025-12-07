@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'uuid',
     'company_organization',
@@ -96,6 +97,10 @@ DATABASES = {
         'PORT': '5432',
     }
 }
+
+
+# Custom User Model
+AUTH_USER_MODEL = 'users_security.User'
 
 
 # Password validation

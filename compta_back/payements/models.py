@@ -29,7 +29,7 @@ class Payements(models.Model):
     payement_method_id = models.ForeignKey(Payement_Methods, on_delete=models.CASCADE, related_name='method')
     reference_number = models.CharField(max_length=100, blank=True)
     amount = models.DecimalField(max_digits=15, decimal_places=2)
-    account_id = models.ForeignKey(Accounts, on_delete=models.CASCADE, related_name='account_for_payement')
+    account_id = models.ForeignKey(Accounts, on_delete=models.CASCADE)
     notes = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -39,7 +39,7 @@ class Payements(models.Model):
 class Payment_Allocations(models.Model):
 
     id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False)
-    payement_id = models.ForeignKey(Payements, on_delete=models.CASCADE)
+    payement_id = models.ForeignKey(Payements, on_delete=models.CASCADE, related_name='allocation')
     invoice_id = models.ForeignKey(Invoices, on_delete=models.CASCADE)
     allocated_amount = models.DecimalField(max_digits=15, decimal_places=2)
     allocation_date = models.DateField()
