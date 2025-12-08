@@ -8,7 +8,7 @@ from company_organization.models import Company
 class User(AbstractUser):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    company_id = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='users_company')
+    company_id = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='users_company', null=True, blank=True)
     username = models.CharField(max_length=100, unique=True)
     email = models.EmailField(unique=True)
     full_name = models.CharField(max_length=255)

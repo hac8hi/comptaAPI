@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from compta_back.users_security.models import User, UserPermissions
+from users_security.models import User, UserPermissions
 
 class UserPermissionsSerializer(serializers.ModelSerializer):
     class Meta:
