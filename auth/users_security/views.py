@@ -25,10 +25,22 @@ class LoginView(APIView):
         user = authenticate(username=username, password=password)
 
         if user is None:
-            return Response({"Invalid" : "Invalid username or password!!"},status=status.HTTP_404_NOT_FOUND)
+            response.data = {
+                "success" : False,
+                "message": "Votre identifiant ou votre mot de passe est invalide."
+            }
+            response.status_code = status.HTTP_400_BAD_REQUEST
+
+            return response
 
         if not user.is_active:
-            return Response({"No active" : "This account is not active!!"},status=status.HTTP_404_NOT_FOUND)
+            response.data = {
+                "success" : False,
+                "message": "Votre compte est désactivé, veuillez contacter le support technique."
+            }
+            response.status_code = status.HTTP_401_UNAUTHORIZED
+
+            return response
 
         tokens = get_tokens(user)
         response.set_cookie(
@@ -49,7 +61,11 @@ class LoginView(APIView):
         )
         response.data = {
             "success" : True,
-            "message": "Vous êtes connecté."
+            "user": {
+                'username': user.username,
+                'email': user.email,
+                'is_superuser': user.is_superuser
+            }
         }
         response.status_code = status.HTTP_200_OK
         return response
